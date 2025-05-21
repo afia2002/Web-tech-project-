@@ -59,6 +59,8 @@
             
             <input type="checkbox" id="hong_kong" name="cities[]" value="Hong Kong">
             <label for="hong_kong">Hong Kong</label><br>
+            <input type="checkbox" id="dhaka" name="cities[]" value="Dhaka">
+            <label for="dhaka">Dhaka</label><br>
         </div>
         <input type="submit" name="submit" value="Submit" class="submit-btn">
     </form>
