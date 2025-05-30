@@ -1,0 +1,1 @@
+<?php echo 'Hello, World! Just type localhost/filename (xampp htdocs in e drive) in chrome ^,^ after running xamp apache'; ?>

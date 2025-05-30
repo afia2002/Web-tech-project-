@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Index</title>
+    <link rel="icon" type="image/x-icon" href="favicon1.ico">    <!-- Favicon -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">    <!-- fancy font -->
+    <style>
+        body {
+            font-family: 'EB Garamond', serif;
+        }
+
+        header, header *, h1, nav, .nav-link {
+            font-family: 'EB Garamond', serif !important;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Outer wrapper to center content and add background space -->
+    <div id="outerWrapper" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; padding: 20px; box-sizing: border-box;">
+
+        <!-- Inner content area -->
+        <div style="display: flex; flex-direction: column; width: 90%; max-width: 1200px; height: 100%; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1); background-color: white; border-radius: 10px; overflow: hidden;">
+
+            <!-- Header Section -->
+            <div style="padding: 20px; background-color: #18453b; position: sticky; top: 0; z-index: 1000;">
+
+                <!-- Logo -->
+                <img src="logo.jpg" alt="Logo" style="width: 80px; height: 80px; border-radius: 50%; display: block; margin: 0 auto;">
+                <!-- Title -->
+                <h1 style="margin-top: 10px; margin-bottom: 0; color: #ace1af; font-family: 'EB Garamond', serif; font-weight: 700; font-size: 2.5em; ">Air Quality Index</h1>
+            </div>
+
+            <!-- Main Grid Section -->
+            <div style="display: flex; flex: 1;">
+                <!-- Left side -->
+                <div id="leftSection" style="display: flex; flex-direction: column; flex: 1; background-color: #00563f; min-height: 0;">
+                    <!-- Left Top (Registration) -->
+                    <div id="leftTopSection" style="flex: 2; background-color: #00563f; padding: 20px; color: white; display: flex; justify-content: center; align-items: flex-start; min-height: 0;">
+                        <div style="width: 80%; max-width: 400px; background-color: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 10px;">
+                            <!-- Registration panel  -->
+
+                            <h2 id="registerTitle" style="text-align: center; color: #f8f8ff;">REGISTER</h2>
+
+                            <form action="process.php" method="post" onsubmit="return validateForm()" style="display: flex; flex-direction: column; gap: 10px;">
+                                <input type="text" name="fullName" id="fullName" placeholder="Full Name" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                <p id="nameError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+                                <input type="email" name="email" id="email" placeholder="Email ID" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                <p id="emailError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+
+                                <!-- Gender Dropdown -->
+                                <select name="gender" id="genderSelect" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Prefer not to say</option>
+                                </select>
+                                <p id="genderError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+                                <input type="password" name="password" id="password" placeholder="Password" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                <p id="passwordError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+                                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                <p id="pass2Error" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+                                <input type="date" name="dob" id="dob" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                <p id="dobError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+                                <!-- Country Dropdown -->
+                                <select name="country" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                    <option value="">Select Country</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="BD">Bangladesh</option>
+                                </select>
+
+                                <!-- Terms Checkbox -->
+                                <label>
+                                    <input type="checkbox" name="terms" id="termsCheckbox"> I agree to the terms and conditions
+                                </label>
+                                <p id="termsError" style="color: #e8f48c; font-weight: bold; margin: 0;"></p>
+
+
+                                <!-- Comments Box -->
+                                <textarea name="comments" placeholder="Your comments..." rows="3" style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;"></textarea>
+
+                                <!-- Submit Button -->
+                                <button type="submit" style="background-color: #ace1af; padding: 8px; border: none; cursor: pointer; border-radius: 5px;">Submit</button>
+                            </form>
+
+                            <script>
+                                function validateForm() {
+                                    let name = document.getElementById("fullName").value.trim();
+                                    let email = document.getElementById("email").value.trim();
+                                    let password = document.getElementById("password").value;
+                                    let confirmPassword = document.getElementById("confirmPassword").value;
+                                    let dobValue = document.getElementById("dob").value;
+                                    let gender = document.getElementById("genderSelect").value;
+
+                                    let nameError = document.getElementById("nameError");
+                                    let emailError = document.getElementById("emailError");
+                                    let passwordError = document.getElementById("passwordError");
+                                    let pass2Error = document.getElementById("pass2Error");
+                                    let dobError = document.getElementById("dobError");
+                                    let genderError = document.getElementById("genderError");
+                                    let termsCheckbox = document.getElementById("termsCheckbox");
+                                    let termsError = document.getElementById("termsError");
+
+                                    // Reset errors
+                                    nameError.textContent = "";
+                                    emailError.textContent = "";
+                                    passwordError.textContent = "";
+                                    pass2Error.textContent = "";
+                                    dobError.textContent = "";
+                                    genderError.textContent = "";
+                                    termsError.textContent = "";
+
+                                    let valid = true;
+
+                                    // Empty field check
+                                    if (name === "") {
+                                        nameError.textContent = "Full Name is required.";
+                                        valid = false;
+                                    } else {
+                                        let namePattern = /^[a-zA-Z.\-\s]+$/;
+                                        if (!namePattern.test(name)) {
+                                            nameError.textContent = "Invalid name: use letters, hyphen (-), dot (.), and spaces only.";
+                                            valid = false;
+                                        }
+                                    }
+
+                                    if (email === "") {
+                                        emailError.textContent = "Email ID is required.";
+                                        valid = false;
+                                    } else {
+                                        let emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|yahoo)\.com$/i;
+                                        if (!emailPattern.test(email)) {
+                                            emailError.textContent = "Email must be a gmail.com, hotmail.com, or yahoo.com address.";
+                                            valid = false;
+                                        }
+                                    }
+
+                                    if (gender === "") {
+                                        genderError.textContent = "Please select a gender.";
+                                        valid = false;
+                                    }
+
+                                    if (password === "") {
+                                        passwordError.textContent = "Password is required.";
+                                        valid = false;
+                                    } else {
+                                        let strengthPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+                                        if (!strengthPattern.test(password)) {
+                                            passwordError.textContent = "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.";
+                                            valid = false;
+                                        }
+                                    }
+
+                                    if (confirmPassword === "") {
+                                        pass2Error.textContent = "Please confirm your password.";
+                                        valid = false;
+                                    } else if (password !== confirmPassword) {
+                                        pass2Error.textContent = "Passwords do not match.";
+                                        valid = false;
+                                    }
+
+                                    if (dobValue === "") {
+                                        dobError.textContent = "Please select your date of birth.";
+                                        valid = false;
+                                    } else {
+                                        let dobDate = new Date(dobValue);
+                                        let today = new Date();
+                                        let age = today.getFullYear() - dobDate.getFullYear();
+                                        let m = today.getMonth() - dobDate.getMonth();
+                                        if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+                                            age--;
+                                        }
+                                        if (age < 18) {
+                                            dobError.textContent = "You must be at least 18 years old to register.";
+                                            valid = false;
+                                        }
+                                    }
+
+
+
+
+                                    if (!termsCheckbox.checked) {
+                                        termsError.textContent = "You must agree to the terms and conditions.";
+                                        valid = false;
+                                    }
+
+
+                                    return valid; // prevents form submission if any field is invalid
+                                }
+
+                            </script>
+
+
+                            <script>
+                                function validateLoginForm() {
+                                    let email = document.getElementById("loginEmail").value.trim();
+                                    let password = document.getElementById("loginPassword").value.trim();
+                                    let emailError = document.getElementById("loginEmailError");
+                                    let passwordError = document.getElementById("loginPasswordError");
+
+                                    emailError.textContent = "";
+                                    passwordError.textContent = "";
+
+                                    let valid = true;
+
+                                    // email validation
+                                    if (email === "") {
+                                        emailError.textContent = "Please enter your email.";
+                                        valid = false;
+                                    }
+
+                                    // password validation
+                                    if (password === "") {
+                                        passwordError.textContent = "Please enter your password.";
+                                        valid = false;
+                                    }
+
+                                    return valid;
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Left Bottom (Background Color Picker) -->
+                    <div style="flex: 1; background-color: #e9ffdb; padding: 10px;">
+                        <!-- (Login Section) -->
+                        <div id="leftBottomSection" style="flex: 1; background-color: #e9ffdb; padding: 10px; overflow-y: auto; min-height: 0;">
+                            <div style="width: 80%; max-width: 400px; background-color: rgba(1, 50, 32, 0.2); padding: 15px; border-radius: 10px; margin: 0 auto;">
+                                <h2 style="text-align: center; color: #00563f;">LOGIN</h2>
+                                <form action="login.php" method="post" onsubmit="return validateLoginForm()" style="display: flex; flex-direction: column; gap: 10px;">
+                                    <input type="email" name="loginEmail" id="loginEmail" placeholder="Email ID" required style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                    <p id="loginEmailError" style="color: red; font-weight: bold; margin: 0;"></p>
+
+                                    <input type="password" name="loginPassword" id="loginPassword" placeholder="Password" required style="padding: 8px; border-radius: 5px; border: none; background-color: #f8f8ff;">
+                                    <p id="loginPasswordError" style="color: red; font-weight: bold; margin: 0;"></p>
+
+                                    <button type="submit" style="background-color: #00563f; color: #f8f8ff; padding: 8px; border: none; cursor: pointer; border-radius: 5px;">Login</button>
+                                </form>
+
+                            </div>
+                        </div>
+                        <h3>Pick a Background Color:</h3>
+                        <input type="color" id="colorPicker">
+                    </div>
+                </div>
+
+                <script>
+                    /* Color inverse for registration box*/
+                    function invertColor(hexColor) {
+                        hexColor = hexColor.replace('#', '');
+                        var r = parseInt(hexColor.substr(0, 2), 16);
+                        var g = parseInt(hexColor.substr(2, 2), 16);
+                        var b = parseInt(hexColor.substr(4, 2), 16);
+
+                        var invertedR = (255 - r).toString(16).padStart(2, '0');
+                        var invertedG = (255 - g).toString(16).padStart(2, '0');
+                        var invertedB = (255 - b).toString(16).padStart(2, '0');
+
+                        return `#${invertedR}${invertedG}${invertedB}`;
+                    }
+
+                    document.getElementById("colorPicker").addEventListener("input", function (event) {
+                        var pickedColor = event.target.value;
+                        document.getElementById("outerWrapper").style.backgroundColor = pickedColor;
+                    });
+
+                </script>
+
+                <script>
+                    function setCookie(name, value, days = 3650) { // 10 years default
+                        const date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        let expires = "expires=" + date.toUTCString();
+                        document.cookie = `${name}=${value}; ${expires}; path=/`;
+                    }
+
+                    function getCookie(name) {
+                        const value = `; ${document.cookie}`;
+                        const parts = value.split(`; ${name}=`);
+                        if (parts.length === 2) return parts.pop().split(';').shift();
+                        return null;
+                    }
+
+                    function applySavedBackgroundColor() {
+                        const savedColor = getCookie("bgcolor");
+                        if (savedColor) {
+                            document.getElementById("outerWrapper").style.backgroundColor = savedColor;
+                            document.getElementById("colorPicker").value = savedColor;
+                        }
+                    }
+
+                    // When color is picked, apply it and save to cookie
+                    document.getElementById("colorPicker").addEventListener("input", function (event) {
+                        const pickedColor = event.target.value;
+                        document.getElementById("outerWrapper").style.backgroundColor = pickedColor;
+                        setCookie("bgcolor", pickedColor);
+                    });
+
+                    // On page load, apply saved background color
+                    window.addEventListener("load", applySavedBackgroundColor);
+                </script>
+
+
+
+
+                <!-- Right side -->
+                <div style="flex: 1; background-color: #f0fff0; padding: 10px; display: flex; flex-direction: column; justify-content: flex-start; margin-top: 15px; position: relative;">
+                    <div style="overflow: hidden; max-height: 200px;">
+                        <!-- Set a fixed height for the table -->
+                        <table style="width: 90%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #18453b; padding: 8px; background-color: #18453b; color: white;">City</th> <!-- Col 1 -->
+                                    <th style="border: 1px solid #18453b; padding: 8px; background-color: #18453b; color: white;">Air Quality Index</th> <!-- Col 2 -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 10 rows -->
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Tokyo</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">45</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Seoul</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">60</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Beijing</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">120</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Bangkok</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">80</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Singapore</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">30</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Delhi</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">150</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">Jakarta</td>
+                                    <td style="border: 1px solid #18453b; padding: 8px;">90</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, rgba(240, 255, 240, 5), rgba(240, 255, 240, 1));"></div>
+                    </div>
+                    <p style="color: #18453b; margin-top: 20px;">Please log in to see more content...</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+        <script>
+    document.getElementById("colorPicker").addEventListener("input", function (event) {
+                document.getElementById("leftSection").style.backgroundColor = event.target.value;
+            });</script>
+</body>
+</html>
